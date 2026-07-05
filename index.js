@@ -1,105 +1,75 @@
-const balandceElemet = document.getElementById("balance");
-const incomeamount = document.getElementById("income-amount");
-const expensesamount = document.getElementById("expense-amount");
-const transactionlist = document.getElementById("transaction-list");
-const transactionform = document.getElementById("transaction-form");
-const descriptionElement = document.getElementById("description");
-const amountElement = document.getElementById("amount");
-
-let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
-
-transactionform.addEventListener("submit", addtransaction);
-
-function addtransaction(event) {
+const balanceEL = document.getElementById("balance");
+const incomeAmount = document.getElementById("income-amount");
+const expensesAmount = document.getElementById("expense-amount");
+const transactionList = document.getElementById("transaction-list");
+const descriptionEL = document.getElementById("description");
+const amountEL = document.getElementById("amount");
+const transactionForm = document.getElementById("transaction-form");
+let transactions=JSON.parse(localStorage.getItem("transactions"))||[];
+transactionForm.addEventListener("submit",addTransaction);
+function addTransaction(event){
     event.preventDefault();
-
-    const description = descriptionElement.value.trim();
-    const amount = parseFloat(amountElement.value);
-
+    const description=descriptionEL.value.trim();
+    const amount=parseFloat(amountEL.value);
     transactions.push({
-        id: Date.now(),
+        id:Date.now(),
         description,
         amount
-    });
-
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-
-    updatetransactionlist();
-    updatesummary();
-
-    transactionform.reset();
+    })
+ localStorage.setItem("transactions",JSON.stringify(transactions));
+ updatetransactionlist();
+ updatesummary();
+ transactionForm.reset();
 }
-
-function updatetransactionlist() {
-    transactionlist.innerHTML = "";
-
-    const sortedtransaction = [...transactions].reverse();
-
-    sortedtransaction.forEach((transaction) => {
-        const transactionEL = createtransanctionElment(transaction);
-        transactionlist.appendChild(transactionEL);
-    });
+function updatetransactionlist(){
+    transactionList.innerHTML="";
+    const sortedtransactions=[...transactions].reverse();
+    sortedtransactions.forEach((transaction)=>{
+        const transactionEl=createtransactionElement(transaction)
+        transactionList.appendChild(transactionEl)
+    })
 }
-
-function createtransanctionElment(transaction) {
-    const li = document.createElement("li");
-
-    li.classList.add("transaction");
-    li.classList.add(transaction.amount > 0 ? "income" : "expenses");
-
-    li.innerHTML = `
+function createtransactionElement(transaction){
+    const li=document.createElement("li");
+    li.classList.add("transaction")
+        li.classList.add(transaction.amount > 0 ? "income" : "expenses");
+        li.innerHTML=`
         <span>${transaction.description}</span>
-
-        <span>
-            ${formatcurrency(transaction.amount)}
-
-            <button class="delete-btn" onclick="removeTransaction(${transaction.id})">
-                X
-            </button>
+        <span>${formatCurrency(transaction.amount)}
+        <button class="delete-btn" onclick="RemoveTransactions(${transaction.id})">X</button>
+    
         </span>
-    `;
+        `;
+        return li;
 
-    return li;
+
+
 }
-
-function updatesummary() {
-
-    const balance = transactions.reduce(
-        (accumulator, transaction) => accumulator + transaction.amount,
-        0
+function updatesummary(){
+    const balance=transactions.reduce((accumulator,transaction)=>accumulator+transaction.amount,0
     );
+    const income=transactions.filter(transaction=>transaction.amount>0)
+                  .reduce((accumulator,transaction)=>accumulator+transaction.amount,0
+                );
+ const expenses=transactions.filter(transaction=>transaction.amount < 0)
+                  .reduce((accumulator,transaction)=>accumulator+transaction.amount,0
+                );
 
-    const income = transactions
-        .filter(transaction => transaction.amount > 0)
-        .reduce(
-            (accumulator, transaction) => accumulator + transaction.amount,
-            0
-        );
+balanceEL.textContent=formatCurrency(balance);
+incomeAmount.textContent=formatCurrency(income);
+expensesAmount.textContent=formatCurrency(expenses);
+                }
 
-    const expenses = transactions
-        .filter(transaction => transaction.amount < 0)
-        .reduce(
-            (accumulator, transaction) => accumulator + transaction.amount,
-            0
-        );
-
-    balandceElemet.textContent = formatcurrency(balance);
-    incomeamount.textContent = formatcurrency(income);
-    expensesamount.textContent = formatcurrency(expenses);
-}
-
-function formatcurrency(number) {
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD"
+function formatCurrency(number){
+    return new Intl.NumberFormat("en-KE",{
+        style:"currency",
+        currency:"KES"
     }).format(number);
-}
-function removeTransaction(id){
-    transactions=transactions.filter(transaction=>transaction.id!==id)
-    localStorage.setItem("transactions",JSON.stringify(transactions))
-    updatetransactionlist();
-    updatesummary();
+  
 }
 
+function RemoveTransactions(id){
+transactions.filter(transaction=>transaction.id !==id);
 updatetransactionlist();
 updatesummary();
+}

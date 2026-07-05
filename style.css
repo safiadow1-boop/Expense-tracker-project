@@ -23,7 +23,7 @@ body{
     box-shadow: 2px 5px 5px gray;
 }
 
-/* ---------- Headings ---------- */
+
 
 h1{
     text-align: center;
@@ -38,7 +38,6 @@ h2{
     font-size: 1rem;
 }
 
-/* ---------- Balance ---------- */
 
 .balance-container{
     text-align: center;
@@ -61,7 +60,7 @@ h2{
     margin-top: 25px;
 }
 
-/* ---------- Income & Expense Cards ---------- */
+
 
 .income,
 .expenses{
@@ -100,8 +99,6 @@ h2{
     color: red;
 }
 
-/* ---------- Main Layout ---------- */
-
 .main-content{
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -113,7 +110,7 @@ h2{
     flex-direction: column;
 }
 
-/* ---------- Transaction List ---------- */
+
 
 #transaction-list{
     list-style: none;
@@ -141,7 +138,7 @@ h2{
     background: gray;
 }
 
-/* ---------- Transaction Card ---------- */
+
 
 .transaction{
     display: flex;
@@ -170,7 +167,7 @@ h2{
     border-right-color: red;
 }
 
-/* ---------- Delete Button ---------- */
+
 
 .delete-btn{
     background: none;
@@ -189,7 +186,7 @@ h2{
     transform: scale(1.1);
 }
 
-/* ---------- Form ---------- */
+
 
 .form-group{
     margin-bottom: 15px;
@@ -212,16 +209,16 @@ input{
 input:focus{
     outline: none;
     border-color: green;
-    box-shadow: 0 0 5px rgba(0,128,0,.4);
+    box-shadow: 0 0 5px rgba(141, 131, 127, 0.4);
 }
 
 small{
-    display: block;
+    display: inline;
     margin-top: 5px;
-    color: gray;
+    color: rgba(21, 14, 14, 0.979);
 }
 
-/* ---------- Button ---------- */
+
 
 button[type="submit"]{
     width: 100%;
@@ -246,7 +243,7 @@ button[type="submit"]:active{
     transform: translateY(0);
 }
 
-/* ---------- Animation ---------- */
+
 
 @keyframes slideIn{
 
@@ -261,7 +258,6 @@ button[type="submit"]:active{
     }
 }
 
-/* ---------- Responsive ---------- */
 
 @media(max-width:900px){
 
